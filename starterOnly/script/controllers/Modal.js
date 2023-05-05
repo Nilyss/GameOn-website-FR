@@ -80,7 +80,7 @@ class Modal {
             inputEl.parentElement,
             `Veuillez renseigner ${element.text}`
           );
-          inputEl.style.border = '2px solid #fe142f'
+          inputEl.style.border = '2px solid #e54858'
 
         } else if (
           (element.id === '#email' && !this.emailRegex.test(inputValue)) ||
@@ -119,19 +119,17 @@ class Modal {
     };
 
     const formSuccess = () => {
-     //  const successMessageWrapper = document.querySelector('.form');
-     //
-     //  // Display success message
-     //  const successMessage = document.createElement('p');
-     //  successMessage.classList.add('success');
-     //  successMessage.textContent = `Merci ! Votre réservation a été reçue.`;
-     //  successMessageWrapper.appendChild(successMessage);
-     //
-     // // Remove success message after 3 seconds and close modal
-     //  setTimeout(() => {
-     //    successMessage.remove();
-     //    closeModal();
-     //  }, 4000);
+      // Change submit button text and add event listener to close modal
+      this.formSubmitButton.innerText = 'Fermer';
+      this.formSubmitButton.addEventListener('click', closeModal);
+
+      const formData = document.querySelectorAll('.formData');
+      const textLabel = document.querySelector('.text-label');
+      formData.forEach((element) => {
+        element.style.opacity = '0';
+      });
+      textLabel.innerText = 'Merci pour votre  inscription';
+      textLabel.classList.add('success-msg');
     };
 
     // init functions
