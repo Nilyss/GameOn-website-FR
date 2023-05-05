@@ -42,6 +42,7 @@ class Modal {
       // Remove previous error if they exist
       const errors = document.querySelectorAll('.error');
       errors.forEach((error) => error.remove());
+      let isFormValid = true;
 
       // Function to display error message in DOM
       const showError = (sibling, message) => {
@@ -49,6 +50,7 @@ class Modal {
         newElement.classList.add('error');
         newElement.textContent = `${message}`;
         sibling.insertAdjacentElement('afterend', newElement);
+        isFormValid = false;
       };
 
       // Create array of inputs && radio button to check
@@ -72,11 +74,14 @@ class Modal {
       inputs.forEach((element) => {
         const inputEl = document.querySelector(element.id);
         const inputValue = inputEl.value.trim();
+        inputEl.style.border = 'unset'
         if (inputValue === '') {
           showError(
             inputEl.parentElement,
             `Veuillez renseigner ${element.text}`
           );
+          inputEl.style.border = '2px solid #fe142f'
+
         } else if (
           (element.id === '#email' && !this.emailRegex.test(inputValue)) ||
           (element.id === '#quantity' && !this.quantityRegex.test(inputValue))
@@ -109,6 +114,24 @@ class Modal {
           `Veuillez accepter les conditions d'utilisation`
         );
       }
+
+      if (isFormValid) formSuccess();
+    };
+
+    const formSuccess = () => {
+     //  const successMessageWrapper = document.querySelector('.form');
+     //
+     //  // Display success message
+     //  const successMessage = document.createElement('p');
+     //  successMessage.classList.add('success');
+     //  successMessage.textContent = `Merci ! Votre réservation a été reçue.`;
+     //  successMessageWrapper.appendChild(successMessage);
+     //
+     // // Remove success message after 3 seconds and close modal
+     //  setTimeout(() => {
+     //    successMessage.remove();
+     //    closeModal();
+     //  }, 4000);
     };
 
     // init functions
