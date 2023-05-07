@@ -1,4 +1,4 @@
-class Modal {
+class RegisterModal {
   constructor() {
     this.modalBackground = document.querySelector('.bground');
     this.modalButton = document.querySelectorAll('.modal-btn');
@@ -21,16 +21,6 @@ class Modal {
     this.closeModalButtons.forEach((btn) =>
       btn.addEventListener('click', closeModal)
     );
-
-    //  Responsive navigation
-    const editNav = () => {
-      const x = document.getElementById('myTopnav');
-      if (x.className === 'topnav') {
-        x.className += ' responsive';
-      } else {
-        x.className = 'topnav';
-      }
-    };
 
     this.formSubmitButton.addEventListener('click', (event) => {
       event.preventDefault();
@@ -131,11 +121,8 @@ class Modal {
       textLabel.innerText = 'Merci pour votre  inscription';
       textLabel.classList.add('success-msg');
     };
-
-    // init functions
-    await editNav();
   }
 }
 
-const modal = new Modal();
-modal.initApp();
+const registerModal = new RegisterModal();
+registerModal.initApp();
