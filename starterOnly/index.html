@@ -14,7 +14,7 @@
   <body>
     <div class="topnav" id="myTopnav">
       <div class="header-logo">
-      <img alt="logo" src='public/assets/Logo.png' width="auto" height="auto" />
+      <img alt="logo" src='public/assets/Logo.png' />
     </div>
     <div class="main-navbar">
       
@@ -23,12 +23,11 @@
       <a href="#"><span>À propos</span></a>
       <a href="#"><span>Contact</span></a>
       <a href="#"><span>Évènements passés</span></a>
-      <a href="javascript:void(0);" class="icon" onclick="editNav()">
+      <a href="#" class="icon">
         <i class="fa fa-bars"></i>
       </a>
     </div>
     </div>
-  </div>
     <main>
       <div class="hero-section">
         <div class="hero-content">
@@ -60,7 +59,6 @@
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="return validate();"
               class='form'
             >
               <div
@@ -183,7 +181,7 @@
               </div>
 
               <div
-                class="formData">
+                class="formData checkbox-inputWrapper">
                 <input
                   class="checkbox-input"
                   type="checkbox"
@@ -224,7 +222,7 @@
     <!-- ********** SERVICES ********** -->
 
     <!-- ********** CONTROLLER ********** -->
-    <script src='script/controllers/Modal.js'></script>
-
+    <script src='script/controllers/Index.js'></script>
+    <script src='script/controllers/RegisterModal.js'></script>
   </body>
 </html>
