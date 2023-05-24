@@ -5,6 +5,8 @@ class RegisterModal {
     this.formSubmitButton = document.querySelector('.btn-submit');
     this.closeModalButtons = document.querySelectorAll('.close');
 
+    // Regex with 2 to 20 characters, only letters
+    this.nameRegex = /^[a-zA-Z]{2,20}$/;
     // Regex for email validation (RFC 5322 Official Standard)
     this.emailRegex =
       /^((\w\w+)[.\-]?)+@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -71,13 +73,17 @@ class RegisterModal {
             `Veuillez renseigner ${element.text}`
           );
           inputEl.style.border = '2px solid #e54858';
+
+          // Regex validations for firstName, lastName, email & quantity 
         } else if (
+          (element.id === '#first' && !this.nameRegex.test(inputValue)) ||
+          (element.id === '#last' && !this.nameRegex.test(inputValue)) ||
           (element.id === '#email' && !this.emailRegex.test(inputValue)) ||
           (element.id === '#quantity' && !this.quantityRegex.test(inputValue))
         ) {
           showError(
             inputEl.parentElement,
-            `Le format de ${element.text} est incorrect`
+            `Le format du champ ${element.text} est incorrect`
           );
         }
       });
