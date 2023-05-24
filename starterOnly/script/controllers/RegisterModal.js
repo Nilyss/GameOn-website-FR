@@ -28,6 +28,23 @@ class RegisterModal {
       formValidation();
     });
 
+    // Create array of inputs && radio button to check
+    const inputs = [
+      { id: '#first', text: 'le prénom' },
+      { id: '#last', text: 'le nom' },
+      { id: '#email', text: "l'email" },
+      { id: '#birthdate', text: 'la date de naissance' },
+      { id: '#quantity', text: 'le nombre de tournois' },
+    ];
+    const locations = [
+      { id: '#location1', town: 'Paris' },
+      { id: '#location2', town: 'Marseille' },
+      { id: '#location3', town: 'Lyon' },
+      { id: '#location4', town: 'Toulouse' },
+      { id: '#location5', town: 'Nice' },
+      { id: '#location6', town: 'Nantes' },
+    ];
+
     const formValidation = () => {
       // Remove previous error if they exist
       const errors = document.querySelectorAll('.error');
@@ -43,35 +60,17 @@ class RegisterModal {
         isFormValid = false;
       };
 
-      // Create array of inputs && radio button to check
-      const inputs = [
-        { id: '#first', text: 'le prénom' },
-        { id: '#last', text: 'le nom' },
-        { id: '#email', text: "l'email" },
-        { id: '#birthdate', text: 'la date de naissance' },
-        { id: '#quantity', text: 'le nombre de tournois' },
-      ];
-      const locations = [
-        { id: '#location1', town: 'Paris' },
-        { id: '#location2', town: 'Marseille' },
-        { id: '#location3', town: 'Lyon' },
-        { id: '#location4', town: 'Toulouse' },
-        { id: '#location5', town: 'Nice' },
-        { id: '#location6', town: 'Nantes' },
-      ];
-
       // Check if inputs are empty or if email/quantity format is incorrect. If so, display error message
       inputs.forEach((element) => {
         const inputEl = document.querySelector(element.id);
         const inputValue = inputEl.value.trim();
-        inputEl.style.border = 'unset'
+        inputEl.style.border = 'unset';
         if (inputValue === '') {
           showError(
             inputEl.parentElement,
             `Veuillez renseigner ${element.text}`
           );
-          inputEl.style.border = '2px solid #e54858'
-
+          inputEl.style.border = '2px solid #e54858';
         } else if (
           (element.id === '#email' && !this.emailRegex.test(inputValue)) ||
           (element.id === '#quantity' && !this.quantityRegex.test(inputValue))
@@ -115,6 +114,65 @@ class RegisterModal {
 
       const formData = document.querySelectorAll('.formData');
       const textLabel = document.querySelector('.text-label');
+
+      // Create object with form data
+      const formDatas = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        birthdate: '',
+        quantity: '',
+        location: '',
+        userConditions: false,
+        newsletter: false,
+      };
+
+      // Map inputs to object
+      const inputMap = {
+        '#first': 'firstName',
+        '#last': 'lastName',
+        '#email': 'email',
+        '#birthdate': 'birthdate',
+        '#quantity': 'quantity',
+      };
+
+      // Format birthdate to YYYYMMDD
+      const formatBirthdate = (birthdate) => {
+        const birthdateArray = birthdate.split('-');
+        const birthdateDay = birthdateArray[2];
+        const birthdateMonth = birthdateArray[1];
+        const birthdateYear = birthdateArray[0];
+        return `${birthdateYear}${birthdateMonth}${birthdateDay}`;
+      };
+
+      // Add values to object using inputMap for keys
+      Object.entries(inputMap).forEach(([key, value]) => {
+        const inputEl = document.querySelector(key);
+        if (key === '#birthdate') {
+          formDatas[value] = formatBirthdate(inputEl.value);
+        } else {
+          formDatas[value] = inputEl.value;
+        }
+      });
+
+      // Add location to object
+      const locationChecked = locations.find((element) => {
+        const locationEl = document.querySelector(element.id);
+        return locationEl.checked;
+      });
+
+      if (locationChecked) {
+        formDatas['location'] = locationChecked.town;
+      }
+
+      // Add userCondition value to object
+      const conditionsEl = document.querySelector('#checkbox1');
+      formDatas['userConditions'] = conditionsEl.checked;
+
+      // log object in console before sending to server (for testing)
+      console.log(formDatas);
+
+      // confirm form success and hide form
       formData.forEach((element) => {
         element.style.opacity = '0';
       });
